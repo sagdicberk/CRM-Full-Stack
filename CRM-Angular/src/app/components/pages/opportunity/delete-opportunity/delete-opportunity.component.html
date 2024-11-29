@@ -1,0 +1,22 @@
+<div *ngIf="opportunity" class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 mt-8">
+  <h2 class="text-2xl font-bold text-red-600 mb-4">Silinecek Fırsat</h2>
+  <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ opportunity.name }}</h3>
+
+  <ul class="list-disc list-inside text-gray-700">
+    <li><strong>Fiyat:</strong> {{ opportunity.value | currency:'TRY ':'symbol':'1.2-2' }}</li>
+    <li><strong>Tahmini Kapanış Tarihi:</strong> {{ opportunity.expectedCloseDate | date:'dd/MM/yyyy' }}</li>
+    <li><strong>Müşteri:</strong> {{ opportunity.customer.name }}</li>
+  </ul>
+
+  <div class="mt-6 flex justify-end">
+    <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded mr-2"
+    (click)="delete()">
+      Sil
+    </button>
+    <button
+    (click)="cancel()"
+    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">
+      İptal
+    </button>
+  </div>
+</div>

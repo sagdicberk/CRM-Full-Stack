@@ -1,0 +1,17 @@
+<div class="container mg-auto p-6 ng-white shadow-md rounded-lg text-center items-center justify-center">
+  <h1 class="text-2xl font-bold mb-4">Şirket Sil</h1>
+
+  <div *ngIf="company" class="">
+    <ul>
+      <li>İsim :{{company.name}}</li>
+      <li>E-Posta :{{company.email}}</li>
+      <li>Telefon :{{company.phone}}</li>
+      <li>Adres :{{company.address}}</li>
+      <li>Endüstri :{{company.industry}}</li>
+    </ul>
+    <p class="font-semibold">Bu şirketi silmek istediğinize emin misini?</p>
+    <button class="px-4 py-2  bg-red-500 rounded m-4" (click)="deleteCompanyById(company.id)">Sil</button>
+
+    <button class="px-4 py-2  bg-gray-500 rounded m-4" (click)="cancel()" >İptal</button>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<div class="container mx-auto p-8 space-y-10">
+
+  <!-- Customer Stats Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- Total Customer Count -->
+    <div class="bg-gradient-to-r from-teal-400 via-teal-600 to-teal-800 p-6 rounded-xl shadow-xl text-white text-center">
+      <h3 class="text-xl font-semibold mb-2">Müşteri Sayısı</h3>
+      <p class="text-5xl font-bold">{{ totalCustomerCount }}</p>
+
+      <h3 class="text-xl font-semibold mb-2">Şirket Sayısı</h3>
+      <p class="text-5xl font-bold">{{ totalCompanyCount }}</p>
+    </div>
+
+    <!-- Customer Count by Company -->
+    <div class="bg-white p-6 rounded-xl shadow-xl">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">Customer Count by Company</h3>
+      <ngx-charts-bar-horizontal
+        [results]="customerCountByCompany"
+        [view]="[700, 350]"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showDataLabel]="true"
+        [gradient]="true"
+        [roundDomains]="true"
+        [barPadding]="12"
+      >
+      </ngx-charts-bar-horizontal>
+    </div>
+
+  </div>
+
+  <!-- Top Customers Section -->
+  <div class="bg-gradient-to-r from-purple-400 via-purple-300 to-purple-800 p-6 rounded-xl shadow-xl text-white">
+    <h3 class="text-xl font-semibold border-b-2 mb-4">Top Customers by Opportunities</h3>
+    <ngx-charts-bar-horizontal
+      [results]="getTopCustomers"
+      [view]="[1400, 350]"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showDataLabel]="true"
+      [gradient]="true"
+      [roundDomains]="true"
+      [barPadding]="12"
+    >
+    </ngx-charts-bar-horizontal>
+  </div>
+
+  <!-- Opportunities by Company Section -->
+  <div class="bg-white p-6 rounded-xl shadow-xl">
+    <h3 class="text-xl font-semibold text-gray-800 border-b-2 mb-4">Opportunities by Company</h3>
+    <ngx-charts-bar-horizontal
+      [results]="opportunitiesByCompany"
+      [view]="[1400, 350]"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showDataLabel]="true"
+      [gradient]="true"
+      [roundDomains]="true"
+      [barPadding]="12"
+    >
+    </ngx-charts-bar-horizontal>
+  </div>
+
+  <!-- Opportunity Dashboard Section -->
+  <div class="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-800 p-6 rounded-xl shadow-xl text-white">
+    <h2 class="text-2xl font-semibold mb-6">Opportunity Dashboard</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Open Opportunities -->
+      <div class="bg-white p-6 shadow-xl rounded-xl text-center">
+        <h4 class="text-lg font-semibold text-gray-800">Açık Fırsatlar</h4>
+        <p class="text-3xl font-bold text-teal-600 mt-2">{{ openOpportunitiesCount }}</p>
+      </div>
+
+      <!-- Won Opportunities -->
+      <div class="bg-white p-6 shadow-xl rounded-xl text-center">
+        <h4 class="text-lg font-semibold text-gray-800">Kazanılmış Fırsatlar</h4>
+        <p class="text-3xl font-bold text-green-600 mt-2">{{ wonOpportunitiesCount }}</p>
+      </div>
+
+      <!-- Lost Opportunities -->
+      <div class="bg-white p-6 shadow-xl rounded-xl text-center">
+        <h4 class="text-lg font-semibold text-gray-800">Kaybedilmiş Fırsatlar</h4>
+        <p class="text-3xl font-bold text-red-600 mt-2">{{ lostOpportunitiesCount }}</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>

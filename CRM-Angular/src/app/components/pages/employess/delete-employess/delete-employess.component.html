@@ -1,0 +1,18 @@
+<div
+  class="container mg-auto p-6 ng-white shadow-md rounded-lg text-center items-center justify-center"
+>
+  <h1 class="text-2xl font-bold mb-4">Çalışan Sil</h1>
+
+  <div>
+    <div *ngIf="employee">
+      <h1>{{ employee.username }}</h1>
+      <h2>{{ employee.email }}</h2>
+      <h2>{{ employee.roles }}</h2>
+
+      <p class="font-semibold">Bu şirketi silmek istediğinize emin misini?</p>
+
+      <button class="px-4 py-2 bg-red-500 rounded m-4 text-white" (click)="deleteEmployee(employee.id)">Sil</button>
+      <button class="px-4 py-2 bg-gray-500 rounded m-4 text-white" (click)="cancel()">İptal</button>
+    </div>
+  </div>
+</div>

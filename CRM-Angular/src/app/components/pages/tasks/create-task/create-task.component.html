@@ -1,0 +1,111 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-semibold mb-4">Yeni Görev Oluştur</h1>
+
+  <form (ngSubmit)="create()" class="space-y-4">
+    <!-- Başlık -->
+    <div class="flex flex-col">
+      <label for="title" class="mb-2 font-medium">Başlık</label>
+      <input
+        type="text"
+        id="title"
+        [(ngModel)]="taskRequest.title"
+        name="title"
+        class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Görev başlığını girin"
+        required
+      />
+    </div>
+
+    <!-- Açıklama -->
+    <div class="flex flex-col">
+      <label for="description" class="mb-2 font-medium">Açıklama</label>
+      <textarea
+        id="description"
+        [(ngModel)]="taskRequest.description"
+        name="description"
+        rows="4"
+        class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Görev açıklamasını girin"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Çalışan Seçimi -->
+    <div class="flex flex-col">
+      <label for="userId" class="mb-2 font-medium">Çalışan Seç</label>
+      <select
+        id="userId"
+        [(ngModel)]="taskRequest.userId"
+        name="userId"
+        class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      >
+        <option *ngFor="let employee of employees" [value]="employee.id">
+          {{ employee.username }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Fırsat Seçimi -->
+    <div class="flex flex-col">
+      <label for="opportunityId" class="mb-2 font-medium">Fırsat Seç</label>
+      <select
+        id="opportunityId"
+        [(ngModel)]="taskRequest.opportunityId"
+        name="opportunityId"
+        class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      >
+        <option *ngFor="let opportunity of opportunities" [value]="opportunity.id">
+          {{ opportunity.name }} - {{opportunity.customer.name}} - {{opportunity.customer.company.name}}
+        </option>
+      </select>
+    </div>
+
+    <!-- Toplantı Tipi -->
+    <div class="flex flex-col">
+      <label for="type" class="mb-2 font-medium">Toplantı Tipi</label>
+      <select
+        id="type"
+        [(ngModel)]="taskRequest.type"
+        name="type"
+        class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      >
+        <option *ngFor="let type of MeetingTypeEnum | keyvalue" [value]="type.value">
+          {{ type.value }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Toplantı Tarihi -->
+    <div class="flex flex-col">
+      <label for="dateOfMeeting" class="mb-2 font-medium">Toplantı Tarihi</label>
+      <input
+        type="date"
+        id="dateOfMeeting"
+        [(ngModel)]="taskRequest.dateOfMeeting"
+        name="dateOfMeeting"
+        class="border-2 border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      />
+    </div>
+
+    <!-- Form Eylemleri -->
+    <div class="flex justify-between mt-6">
+      <button
+        type="submit"
+        class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Görev Oluştur
+      </button>
+      <button
+        type="button"
+        (click)="cancel()"
+        class="bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+      >
+        İptal
+      </button>
+    </div>
+  </form>
+</div>

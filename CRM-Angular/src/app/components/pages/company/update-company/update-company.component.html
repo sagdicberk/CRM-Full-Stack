@@ -1,0 +1,88 @@
+<div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-2xl font-bold mb-4">Şirket Güncelle</h1>
+
+  <!-- Kontrol: Şirket Verisi Yüklendi mi? -->
+  <div *ngIf="existingCompany">
+    <form (ngSubmit)="updateCompany( existingCompany.id , existingCompany)">
+      <!-- Şirket Adı -->
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700">Şirket Adı</label>
+        <input
+          id="name"
+          [(ngModel)]="existingCompany.name"
+          name="name"
+          type="text"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <!-- Adres -->
+      <div class="mb-4">
+        <label for="address" class="block text-sm font-medium text-gray-700">Adres</label>
+        <input
+          id="address"
+          [(ngModel)]="existingCompany.address"
+          name="address"
+          type="text"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <!-- Telefon -->
+      <div class="mb-4">
+        <label for="phone" class="block text-sm font-medium text-gray-700">Telefon</label>
+        <input
+          id="phone"
+          [(ngModel)]="existingCompany.phone"
+          name="phone"
+          type="text"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          id="email"
+          [(ngModel)]="existingCompany.email"
+          name="email"
+          type="email"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <!-- Endüstri -->
+      <div class="mb-4">
+        <label for="industry" class="block text-sm font-medium text-gray-700">Endüstri</label>
+        <input
+          id="industry"
+          [(ngModel)]="existingCompany.industry"
+          name="industry"
+          type="text"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <!-- Güncelle Butonu -->
+      <div class="mt-6">
+        <button
+          type="submit"
+          class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-300"
+        >
+          Güncelle
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Şirket Bulunamazsa Hata Mesajı -->
+  <div *ngIf="!existingCompany" class="text-red-600 mt-4">
+    <p>Şirket bilgisi yüklenemedi.</p>
+  </div>
+</div>

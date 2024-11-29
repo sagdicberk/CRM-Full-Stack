@@ -1,0 +1,13 @@
+<app-header></app-header> <!-- Header bileşeni -->
+
+<div class="flex flex-col lg:flex-row min-h-screen">
+  <!-- Navbar: Sol panel -->
+  <div class="sm:w-screen lg:w-fit w-auto transition-all duration-300">
+    <app-navbar></app-navbar> <!-- Navbar bileşeni -->
+  </div>
+
+  <!-- Ana içerik alanı -->
+  <div class="sm:w-full lg:w-fit flex-1 p-4 bg-gray-100">
+    <router-outlet></router-outlet> <!-- Ana içerik bileşeni -->
+  </div>
+</div>

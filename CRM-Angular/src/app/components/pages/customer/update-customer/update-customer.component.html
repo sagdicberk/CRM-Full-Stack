@@ -1,0 +1,76 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold text-center mb-6">Müşteri Güncelleme</h2>
+
+
+  <form (ngSubmit)="updateCustomer()">
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 font-medium mb-2">Ad</label>
+      <input
+        type="text"
+        id="name"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="existingCustomer.name"
+        name="name"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="address" class="block text-gray-700 font-medium mb-2">Adres</label>
+      <input
+        type="text"
+        id="address"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="existingCustomer.address"
+        name="address"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="phone" class="block text-gray-700 font-medium mb-2">Telefon</label>
+      <input
+        type="text"
+        id="phone"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="existingCustomer.phone"
+        name="phone"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="email" class="block text-gray-700 font-medium mb-2">E-posta</label>
+      <input
+        type="email"
+        id="email"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="existingCustomer.email"
+        name="email"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="company" class="block text-gray-700 font-medium mb-2">Şirket</label>
+      <select
+        id="company"
+        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="existingCustomer.company.id"
+        name="company"
+        required
+      >
+        <option *ngFor="let company of companies" [value]="company.id">
+          {{ company.name }}
+        </option>
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      Müşteri Güncelle
+    </button>
+  </form>
+</div>

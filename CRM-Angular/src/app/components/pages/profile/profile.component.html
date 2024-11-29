@@ -1,0 +1,47 @@
+<div class="container mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+  <!-- Kullanıcı Bilgileri -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-semibold mb-2 text-gray-800">Bilgileriniz</h1>
+    <p class="text-gray-600">{{ user.email }} - {{ user.username }}</p>
+  </div>
+
+  <!-- Görevler Tablosu -->
+  <div>
+    <h1 class="text-2xl font-semibold mb-4 text-gray-800">Görevleriniz</h1>
+    <div *ngIf="tasks && tasks.length > 0">
+      <table class="min-w-full bg-white border rounded-lg overflow-hidden shadow-md">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="py-2 px-4 text-left">Başlık</th>
+            <th class="py-2 px-4 text-left">Tür</th>
+            <th class="py-2 px-4 text-left">Durum</th>
+            <th class="py-2 px-4 text-left">Toplantı Tarihi</th>
+            <th class="py-2 px-4 text-left">Detay</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks" class="hover:bg-gray-100">
+            <td class="py-2 px-4">{{ task.title }}</td>
+            <td class="py-2 px-4">{{ task.type }}</td>
+            <td class="py-2 px-4">
+              <span [ngClass]="{
+                'text-green-600': task.status === 'Tamamlandı',
+                'text-yellow-600': task.status === 'Devam Ediyor',
+                'text-red-600': task.status === 'Beklemede'
+              }">{{ task.status }}</span>
+            </td>
+            <td class="py-2 px-4">{{ task.dateOfMeeting }}</td>
+            <td class="py-2 px-4">
+              <a [routerLink]="['/home/task-detail', task.id]" class="text-blue-500 hover:underline">Detay</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Görev Yok Mesajı -->
+    <div *ngIf="!tasks || tasks.length === 0" class="text-center text-gray-500 mt-4">
+      Henüz bir göreviniz bulunmamaktadır.
+    </div>
+  </div>
+</div>

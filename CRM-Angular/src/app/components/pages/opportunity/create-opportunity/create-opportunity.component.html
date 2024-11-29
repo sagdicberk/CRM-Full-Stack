@@ -1,0 +1,96 @@
+<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+  <form #opportunityForm="ngForm" (ngSubmit)="onSubmit(opportunityForm)" class="space-y-6">
+    <!-- Opportunity Name -->
+    <div class="space-y-1">
+      <label for="name" class="block text-sm font-medium text-gray-700">Opportunity Name</label>
+      <input
+        id="name"
+        type="text"
+        name="name"
+        [(ngModel)]="newOpportunity.name"
+        #name="ngModel"
+        required
+        minlength="3"
+        class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+      <div class="text-red-600 text-sm mt-1" *ngIf="name.invalid && name.touched">
+        <span *ngIf="name.errors?.['required']">Name is required.</span>
+        <span *ngIf="name.errors?.['minlength']">Name must be at least 3 characters long.</span>
+      </div>
+    </div>
+
+    <!-- Value -->
+    <div class="space-y-1">
+      <label for="value" class="block text-sm font-medium text-gray-700">Value</label>
+      <input
+        id="value"
+        type="number"
+        name="value"
+        [(ngModel)]="newOpportunity.value"
+        #value="ngModel"
+        required
+        min="1"
+        class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+      <div class="text-red-600 text-sm mt-1" *ngIf="value.invalid && value.touched">
+        <span *ngIf="value.errors?.['required']">Value is required.</span>
+        <span *ngIf="value.errors?.['min']">Value must be greater than 0.</span>
+      </div>
+    </div>
+
+    <!-- Expected Close Date -->
+    <div class="space-y-1">
+      <label for="expectedCloseDate" class="block text-sm font-medium text-gray-700">Expected Close Date</label>
+      <input
+        id="expectedCloseDate"
+        type="date"
+        name="expectedCloseDate"
+        [(ngModel)]="newOpportunity.expectedCloseDate"
+        #expectedCloseDate="ngModel"
+        required
+        class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+      <div class="text-red-600 text-sm mt-1" *ngIf="expectedCloseDate.invalid && expectedCloseDate.touched">
+        <span *ngIf="expectedCloseDate.errors?.['required']">Date is required.</span>
+      </div>
+    </div>
+
+    <!-- Customer -->
+    <div class="space-y-1">
+      <label for="customer" class="block text-sm font-medium text-gray-700">Customer</label>
+      <select
+        id="customer"
+        name="customer"
+        [(ngModel)]="newOpportunity.customer"
+        #customer="ngModel"
+        required
+        class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      >
+        <option *ngFor="let customer of customers" [value]="customer.id">
+          {{ customer.name }}
+        </option>
+      </select>
+      <div class="text-red-600 text-sm mt-1" *ngIf="customer.invalid && customer.touched">
+        Customer selection is required.
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex space-x-4">
+      <button
+        type="submit"
+        [disabled]="opportunityForm.invalid"
+        class="px-4 py-2 bg-indigo-600 text-white font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+      >
+        Create Opportunity
+      </button>
+      <button
+        type="button"
+        (click)="cancel()"
+        class="px-4 py-2 bg-gray-600 text-white font-medium rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

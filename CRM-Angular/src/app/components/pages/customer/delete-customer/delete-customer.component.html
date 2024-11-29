@@ -1,0 +1,17 @@
+<div class="container mg-auto p-6 ng-white shadow-md rounded-lg text-center items-center justify-center">
+  <h1 class="text-2xl font-bold mb-4">Müşteri Sil</h1>
+
+  <div *ngIf="customer" class="">
+    <ul>
+      <li>İsim :{{customer.name}}</li>
+      <li>E-Posta :{{customer.email}}</li>
+      <li>Telefon :{{customer.phone}}</li>
+      <li>Adres :{{customer.address}}</li>
+      <li>Şirket :{{customer.company.name}}</li>
+    </ul>
+    <p class="font-semibold">Bu şirketi silmek istediğinize emin misini?</p>
+    <button class="px-4 py-2  bg-red-500 rounded m-4" (click)="deleteCustomer()">Sil</button>
+
+    <button class="px-4 py-2  bg-gray-500 rounded m-4" (click)="cancel()" >İptal</button>
+  </div>
+</div>

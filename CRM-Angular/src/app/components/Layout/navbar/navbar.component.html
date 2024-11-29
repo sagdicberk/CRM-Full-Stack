@@ -1,0 +1,19 @@
+<!-- Navbar yapısı -->
+<nav [ngClass]="{'w-16': !isOpen, 'w-full': isOpen}" class="h-full bg-blue-950 border-r-8 border-blue-700 transition-all duration-300 flex flex-col items-center p-3">
+
+  <!-- Menü açma / kapama butonu -->
+  <button (click)="toggleNav()" class="text-white mb-5 focus:outline-none self-start">
+    <i class="fa fa-bars text-2xl"></i>
+  </button>
+
+  <!-- Menü öğeleri -->
+  <ul class="flex flex-col w-full">
+    <li *ngFor="let item of navItems" class="mb-3">
+      <a *ngIf="item.isVisible()" [routerLink]="item.link" class="flex items-end text-white hover:bg-blue-700 p-3 rounded-md transition-all duration-300">
+        <i [class]="item.icon + ' text-xl'"></i>
+        <!-- Metin, navbar açıkken görünür -->
+        <span [ngClass]="{'hidden': !isOpen, 'inline-block': isOpen}" class="ml-4 whitespace-nowrap">{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,62 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center">Kayıt Ol</h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Kullanıcı Adı</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+          required>
+      </div>
+
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+          required>
+      </div>
+
+      <div class="mb-6">
+        <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Şifre</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+          required>
+      </div>
+
+      <div class="mb-6">
+        <label for="passwordCheck" class="block text-gray-700 text-sm font-bold mb-2">Şifre Tekrarı</label>
+        <input
+          type="password"
+          id="passwordCheck"
+          [(ngModel)]="passwordCheck"
+          name="passwordCheck"
+          class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+          required>
+      </div>
+
+
+      <button
+        type="submit"
+        class="w-full bg-teal-500 text-white py-2 rounded hover:bg-teal-600 transition duration-200">
+        Kayıt Ol
+      </button>
+    </form>
+
+    <div class="flex mt-4">
+      <h3 class="mr-2 font-semibold">Hesabın var mı?</h3> <a [routerLink]="'/login'" class="text-blue-600 font-semibold float-end">Giriş Yap!</a>
+    </div>
+  </div>
+</div>
