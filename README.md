@@ -2,6 +2,8 @@
 
 Bu proje, bir şirketin iş yaptığı diğer şirketleri, müşterileri ve çalışanları yönetebilmesi için geliştirilmiş bir **CRM (Müşteri İlişkileri Yönetimi)** sistemidir. Fırsatlar, görev yönetimi ve çalışanların performansı gibi süreçler kolayca takip edilebilir. Ayrıca kullanıcılar, yetkileri doğrultusunda uygulamaya erişim sağlar.
 
+[Uygulama Tanıtım Videosu](https://youtu.be/TdUD6dezf8Q)
+
 ---
 
 ## 🚀 **Proje Özellikleri**
