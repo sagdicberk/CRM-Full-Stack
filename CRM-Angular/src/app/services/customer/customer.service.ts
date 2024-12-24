@@ -2,14 +2,17 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { customer } from '../../dto/customer/customer';
 import { Observable } from 'rxjs';
+import {ConfigService} from "../../config/config.service";
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
-  private apiUrl = 'http://localhost:8080/api/customers';
+  private readonly apiUrl ;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService:ConfigService) {
+    this.apiUrl = this.configService.getApiUrl() + '/customers';
+  }
 
   createCustomer(request: customer): Observable<any> {
     return this.http.post(`${this.apiUrl}/create`, request, {

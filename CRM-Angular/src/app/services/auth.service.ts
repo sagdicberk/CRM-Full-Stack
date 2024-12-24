@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginRequest } from '../dto/auth/login-request';
 import { RegisterRequest } from '../dto/auth/register-request';
+import {ConfigService} from "../config/config.service";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private readonly apiUrl ;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService:ConfigService) {
+    this.apiUrl = this.configService.getApiUrl() + '/auth';
+  }
 
   login(request: LoginRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, request, {

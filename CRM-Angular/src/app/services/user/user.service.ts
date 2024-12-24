@@ -1,15 +1,18 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UpdateUserRequest } from '../../dto/user/update-user-request';
-import { catchError, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import {ConfigService} from "../../config/config.service";
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/api/user';
+  private readonly apiUrl ;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService:ConfigService) {
+    this.apiUrl = this.configService.getApiUrl()+'/user';
+  }
 
   updateUser(request: UpdateUserRequest, id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/update/${id}`, request, {

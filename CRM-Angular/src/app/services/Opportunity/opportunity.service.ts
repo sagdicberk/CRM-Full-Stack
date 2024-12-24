@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { OpportunityRequest } from '../../dto/Opportunity/Opportunity-request';
 import { Observable } from 'rxjs';
 import { Opportunity } from '../../dto/Opportunity/Opportunity';
+import {ConfigService} from "../../config/config.service";
 
 @Injectable({
   providedIn: 'root',
 })
 export class OpportunityService {
-  private apiUrl = 'http://localhost:8080/api/opportunities';
+  private readonly apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService:ConfigService) {
+    this.apiUrl = this.configService.getApiUrl() + '/opportunities';
+  }
 
   create(request: OpportunityRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}`, request, {
