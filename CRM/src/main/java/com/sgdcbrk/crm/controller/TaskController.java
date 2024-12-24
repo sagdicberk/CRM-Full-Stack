@@ -3,6 +3,7 @@ package com.sgdcbrk.crm.controller;
 import com.sgdcbrk.crm.business.abstracts.TaskService;
 import com.sgdcbrk.crm.dto.task.request.TaskRequest;
 import com.sgdcbrk.crm.model.task.Task;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class TaskController {
 
 
     @PostMapping
-    public ResponseEntity<?> createTask(@RequestBody TaskRequest task) {
+    public ResponseEntity<?> createTask(@RequestBody @Valid TaskRequest task) {
         try{
             taskService.addTask(task);
             return ResponseEntity.status(HttpStatus.CREATED).body(null);
@@ -44,7 +45,7 @@ public class TaskController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTask(@PathVariable long id, @RequestBody TaskRequest taskDetails) {
+    public ResponseEntity<?> updateTask(@PathVariable long id, @RequestBody @Valid TaskRequest taskDetails) {
         try{
             taskService.updateTask(id, taskDetails);
             return ResponseEntity.ok(null);

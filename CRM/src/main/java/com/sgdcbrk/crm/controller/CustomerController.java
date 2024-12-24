@@ -5,6 +5,7 @@ import com.sgdcbrk.crm.dto.customer.request.CreateCustomerRequest;
 import com.sgdcbrk.crm.dto.customer.request.UpdateCustomerRequest;
 import com.sgdcbrk.crm.dto.stats.ChartData;
 import com.sgdcbrk.crm.model.customer.Customer;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createCustomer(@RequestBody CreateCustomerRequest createCustomerRequest) {
+    public ResponseEntity<String> createCustomer(@RequestBody @Valid CreateCustomerRequest createCustomerRequest) {
         try {
             customerService.addCustomer(createCustomerRequest);
             return ResponseEntity.status(201).body("Customer created");
@@ -30,7 +31,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCustomer(@PathVariable long id, @RequestBody UpdateCustomerRequest customer) {
+    public ResponseEntity<?> updateCustomer(@PathVariable long id, @RequestBody @Valid UpdateCustomerRequest customer) {
         try {
             customerService.updateCustomer(id, customer);
             return ResponseEntity.ok("Customer updated");

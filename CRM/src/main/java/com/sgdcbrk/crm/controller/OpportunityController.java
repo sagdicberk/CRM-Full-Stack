@@ -4,15 +4,13 @@ import com.sgdcbrk.crm.business.abstracts.OpportunityService;
 import com.sgdcbrk.crm.dto.opportunity.request.OpportunityRequest;
 import com.sgdcbrk.crm.dto.stats.ChartData;
 import com.sgdcbrk.crm.model.opportunity.Opportunity;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,7 +20,7 @@ public class OpportunityController {
     private final OpportunityService opportunityService;
 
     @PostMapping
-    public ResponseEntity<String> createOpportunity(@RequestBody OpportunityRequest request) {
+    public ResponseEntity<String> createOpportunity(@RequestBody @Valid OpportunityRequest request) {
         try {
             opportunityService.saveOpportunity(request);
             return ResponseEntity.ok("Opportunity created successfully");
@@ -32,7 +30,7 @@ public class OpportunityController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateOpportunity(@PathVariable long id, @RequestBody OpportunityRequest request) {
+    public ResponseEntity<String> updateOpportunity(@PathVariable long id, @RequestBody @Valid OpportunityRequest request) {
         try {
             opportunityService.updateOpportunity(id, request);
             return ResponseEntity.ok("Opportunity updated successfully");

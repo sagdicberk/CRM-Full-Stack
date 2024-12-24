@@ -7,6 +7,8 @@ import com.sgdcbrk.crm.dto.user.responses.GetAllUserResponse;
 import com.sgdcbrk.crm.dto.user.responses.GetCurrentUserResponse;
 import com.sgdcbrk.crm.model.user.Role;
 import com.sgdcbrk.crm.model.user.User;
+import com.sgdcbrk.crm.util.mapper.ModelMapperService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +25,11 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final ModelMapperService modelMapperService;
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<String> updateUser(@PathVariable long id, @RequestBody UpdateUserRequest updateUserRequest){
+    public ResponseEntity<String> updateUser(@PathVariable long id, @RequestBody @Valid UpdateUserRequest updateUserRequest){
         try{
             userService.updateUser(id, updateUserRequest);
             return ResponseEntity.ok("User updated successfully");
@@ -69,9 +72,7 @@ public class UserController {
                 UserDetailsImp userDetails = (UserDetailsImp) principal;
 
                 // GetCurrentUserResponse nesnesine email ve username ekliyoruz
-                GetCurrentUserResponse response = new GetCurrentUserResponse();
-                response.setEmail(userDetails.getEmail());  // veya userDetails.getEmail() ile email'e de ulaşılabilir
-                response.setUsername(userDetails.getUsername());
+                GetCurrentUserResponse response = modelMapperService.forResponse().map(userDetails, GetCurrentUserResponse.class);
 
                 return ResponseEntity.status(HttpStatus.OK).body(response);
             }
