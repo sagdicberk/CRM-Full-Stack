@@ -8,6 +8,7 @@ import com.sgdcbrk.crm.model.opportunity.Opportunity;
 import com.sgdcbrk.crm.model.opportunity.OpportunityStatus;
 import com.sgdcbrk.crm.repository.OpportunityRepository;
 import com.sgdcbrk.crm.util.formatter.DateFormatter;
+import com.sgdcbrk.crm.util.mapper.ModelMapperService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,11 @@ import java.util.stream.Collectors;
 public class OpportunityManager implements OpportunityService {
     private final OpportunityRepository opportunityRepository;
     private final CustomerService customerService;
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void saveOpportunity(OpportunityRequest request) {
-        Opportunity opportunity = new Opportunity();
-        opportunity.setName(request.getName());
-        opportunity.setValue(request.getValue());
+        Opportunity opportunity = modelMapperService.forRequest().map(request, Opportunity.class);
         opportunity.setStatus(OpportunityStatus.OPEN);
         opportunity.setExpectedCloseDate(DateFormatter.formatter(request.getExpectedCloseDate()));
         opportunity.setCustomer(customerService.findCustomerById(request.getCustomer()));
@@ -35,8 +35,7 @@ public class OpportunityManager implements OpportunityService {
     public void updateOpportunity(long id, OpportunityRequest request) {
         Opportunity existingOpportunity = opportunityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No opportunity found with id " + id));
-        existingOpportunity.setName(request.getName());
-        existingOpportunity.setValue(request.getValue());
+        modelMapperService.forRequest().map(request, existingOpportunity);
         existingOpportunity.setExpectedCloseDate(DateFormatter.formatter(request.getExpectedCloseDate()));
         existingOpportunity.setCustomer(customerService.findCustomerById(request.getCustomer()));
 

@@ -10,6 +10,8 @@ import com.sgdcbrk.crm.model.task.Task;
 import com.sgdcbrk.crm.model.task.TaskStatus;
 import com.sgdcbrk.crm.repository.TaskRepository;
 import com.sgdcbrk.crm.util.formatter.DateFormatter;
+import com.sgdcbrk.crm.util.mapper.ModelMapperManager;
+import com.sgdcbrk.crm.util.mapper.ModelMapperService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class TaskManager implements TaskService {
     private final TaskRepository taskRepository;
     private final UserService userService;
     private final OpportunityService opportunityService;
+    private final ModelMapperService modelMapperService;
 
     @Override
     public Task getTask(long id) {
@@ -36,9 +39,7 @@ public class TaskManager implements TaskService {
 
     @Override
     public void addTask(TaskRequest task) {
-        Task newTask = new Task();
-        newTask.setTitle(task.getTitle());
-        newTask.setDescription(task.getDescription());
+        Task newTask = modelMapperService.forRequest().map(task, Task.class);
         newTask.setUser(userService.getUser(task.getUserId()));
         newTask.setOpportunity(opportunityService.getOpportunity(task.getOpportunityId()));
         newTask.setType(MeetingType.valueOf(task.getType()));
@@ -61,8 +62,7 @@ public class TaskManager implements TaskService {
     @Override
     public void updateTask(long id, TaskRequest task) {
         var taskOptional = getTask(id);
-        taskOptional.setTitle(task.getTitle());
-        taskOptional.setDescription(task.getDescription());
+        modelMapperService.forRequest().map(task, taskOptional);
         taskOptional.setUser(userService.getUser(task.getUserId()));
         taskOptional.setOpportunity(opportunityService.getOpportunity(task.getOpportunityId()));
         taskOptional.setType(MeetingType.valueOf(task.getType()));

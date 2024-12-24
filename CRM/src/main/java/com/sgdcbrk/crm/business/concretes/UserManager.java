@@ -7,6 +7,7 @@ import com.sgdcbrk.crm.dto.user.responses.GetAllUserResponse;
 import com.sgdcbrk.crm.model.user.Role;
 import com.sgdcbrk.crm.model.user.User;
 import com.sgdcbrk.crm.repository.UserRepository;
+import com.sgdcbrk.crm.util.mapper.ModelMapperService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,11 @@ import java.util.stream.Collectors;
 public class UserManager implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void createUser(RegisterRequest request) {
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
+        User user = modelMapperService.forRequest().map(request, User.class);
         user.setRoles(Collections.singleton(Role.USER)); // Role setini güncelledik
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
@@ -36,8 +36,7 @@ public class UserManager implements UserService {
     public void updateUser(long id, UpdateUserRequest request) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User with ID " + id + " not found"));
-        existingUser.setUsername(request.getUsername());
-        existingUser.setEmail(request.getEmail());
+        modelMapperService.forRequest().map(request, existingUser);
         if (request.getRoles() != null && !request.getRoles().isEmpty()) {
             Set<Role> updatedRoles = request.getRoles().stream()
                     .map(Role::valueOf)
@@ -61,7 +60,7 @@ public class UserManager implements UserService {
     public List<GetAllUserResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                .map(this::convertToDto)
+                .map(user -> modelMapperService.forResponse().map(user, GetAllUserResponse.class))
                 .collect(Collectors.toList());
     }
 
@@ -70,15 +69,5 @@ public class UserManager implements UserService {
         return userRepository.findByEmailContainsIgnoreCaseOrUsernameContainingIgnoreCase(search.trim(), search.trim()).orElseThrow(() -> new RuntimeException("User with search " + search + " not found"));
 
     }
-
-    private GetAllUserResponse convertToDto(User user) {
-        GetAllUserResponse response = new GetAllUserResponse();
-        response.setId(user.getId());
-        response.setUsername(user.getUsername());
-        response.setEmail(user.getEmail());
-        response.setRoles(user.getRoles());
-        return response;
-    }
-
 
 }

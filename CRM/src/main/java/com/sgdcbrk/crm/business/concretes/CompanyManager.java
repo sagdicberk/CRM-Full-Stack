@@ -3,6 +3,7 @@ package com.sgdcbrk.crm.business.concretes;
 import com.sgdcbrk.crm.business.abstracts.CompanyService;
 import com.sgdcbrk.crm.model.company.Company;
 import com.sgdcbrk.crm.repository.CompanyRepository;
+import com.sgdcbrk.crm.util.mapper.ModelMapperService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class CompanyManager implements CompanyService {
 
     private final CompanyRepository companyRepository;
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void addCompany(Company company) {
@@ -23,11 +25,10 @@ public class CompanyManager implements CompanyService {
     public void updateCompany(long id ,Company company) {
         Company existingCompany = companyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Company not found with id " + company.getId()));
-        existingCompany.setEmail(company.getEmail());
-        existingCompany.setAddress(company.getAddress());
-        existingCompany.setPhone(company.getPhone());
-        existingCompany.setIndustry(company.getIndustry());
-        existingCompany.setName(company.getName());
+
+        // Burada aynı isimdeki fieldları eşleyerek dönüşüm gerçekleşir.
+        modelMapperService.forRequest().map(company, existingCompany);
+
         companyRepository.save(existingCompany);
     }
 

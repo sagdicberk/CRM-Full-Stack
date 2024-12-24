@@ -7,11 +7,11 @@ import com.sgdcbrk.crm.dto.customer.request.UpdateCustomerRequest;
 import com.sgdcbrk.crm.dto.stats.ChartData;
 import com.sgdcbrk.crm.model.customer.Customer;
 import com.sgdcbrk.crm.repository.CustomerRepository;
+import com.sgdcbrk.crm.util.mapper.ModelMapperService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,16 +19,13 @@ import java.util.stream.Collectors;
 public class CustomerManager implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CompanyService companyService;
+    private final ModelMapperService modelMapperService;
 
     @Override
     public void addCustomer(CreateCustomerRequest customer) {
         try {
 
-            Customer newCustomer = new Customer();
-            newCustomer.setName(customer.getName());
-            newCustomer.setAddress(customer.getAddress());
-            newCustomer.setEmail(customer.getEmail());
-            newCustomer.setPhone(customer.getPhone());
+            Customer newCustomer = modelMapperService.forRequest().map(customer, Customer.class);
             newCustomer.setCompany(companyService.findCompanyById(customer.getCompanyId()));
             customerRepository.save(newCustomer);
 
@@ -43,10 +40,7 @@ public class CustomerManager implements CustomerService {
         try {
             Customer existingCustomer = customerRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
-            existingCustomer.setName(customer.getName());
-            existingCustomer.setAddress(customer.getAddress());
-            existingCustomer.setPhone(customer.getPhone());
-            existingCustomer.setEmail(customer.getEmail());
+            modelMapperService.forRequest().map(customer, existingCustomer);
             existingCustomer.setCompany(companyService.findCompanyById(customer.getCompanyId()));
             customerRepository.save(existingCustomer);
         } catch (Exception e) {
